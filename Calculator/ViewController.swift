@@ -31,7 +31,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func numPressed(_ sender: UIButton) {
-        if runningNumer.count <= 8 {
+        if runningNumer.count < 9 {
             runningNumer += "\(sender.tag)"
             label.text = runningNumer
         }
@@ -47,7 +47,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func separator(_ sender: UIButton) {
-        if runningNumer.count <= 7 {
+        if runningNumer.count < 8 {
             runningNumer += "."
             label.text = runningNumer
         }
@@ -98,6 +98,4 @@ class ViewController: UIViewController {
             currentOperation = operation
         }
     }
-
 }
-
