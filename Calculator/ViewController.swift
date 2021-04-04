@@ -79,15 +79,27 @@ class ViewController: UIViewController {
                 rightValue = runningNumer
                 runningNumer = ""
                 
-                if currentOperation == .Add {
+                switch currentOperation {
+                case .Add:
                     result = "\(Double(leftValue)! + Double(rightValue)!)"
-                } else if currentOperation == .Subtract {
+                case .Subtract:
                     result = "\(Double(leftValue)! - Double(rightValue)!)"
-                } else if currentOperation == .Multiply {
+                case .Multiply:
                     result = "\(Double(leftValue)! * Double(rightValue)!)"
-                } else if currentOperation == .Divide {
+                case .Divide:
                     result = "\(Double(leftValue)! / Double(rightValue)!)"
+                default:
+                    result = ""
                 }
+//                if currentOperation == .Add {
+//                    result = "\(Double(leftValue)! + Double(rightValue)!)"
+//                } else if currentOperation == .Subtract {
+//                    result = "\(Double(leftValue)! - Double(rightValue)!)"
+//                } else if currentOperation == .Multiply {
+//                    result = "\(Double(leftValue)! * Double(rightValue)!)"
+//                } else if currentOperation == .Divide {
+//                    result = "\(Double(leftValue)! / Double(rightValue)!)"
+//                }
                 leftValue = result
                 label.text = result
             }
