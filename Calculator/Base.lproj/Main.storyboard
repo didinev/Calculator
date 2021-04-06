@@ -310,7 +310,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="changeOrangeOperatorBackground:" destination="BYZ-38-t0r" eventType="touchUpInside" id="L5G-Ih-JEI"/>
+                                    <action selector="equalPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mKV-3z-8GI"/>
                                     <action selector="equals:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fqS-Ik-htT"/>
                                 </connections>
                             </button>
@@ -331,7 +331,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="changeGrayOperatorBackground:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ppF-04-92w"/>
+                                    <action selector="changeGrayOperatorBackground:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TKF-i7-brf"/>
                                     <action selector="clear:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3QD-3F-INU"/>
                                 </connections>
                             </button>

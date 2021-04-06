@@ -1,10 +1,3 @@
-//
-//  ViewController.swift
-//  Calculator
-//
-//  Created by Dimitar Dinev on 2.04.21.
-//
-
 import UIKit
 
 enum Operation: String {
@@ -30,31 +23,51 @@ class ViewController: UIViewController {
         label.text = "0"
     }
     
-    func changeBackground(_ sender: UIButton) {
-        if sender.titleLabel?.text == "\(sender.tag)" {
-            UIView.animate(withDuration: 1) {
-                sender.backgroundColor = UIColor(red: 165/255, green: 165/255, blue: 165/255, alpha: 1)
-                sender.backgroundColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 1)
-            }
+    func changeNumbersBackground(_ sender: UIButton) {
+        UIView.animate(withDuration: 1) {
+            sender.backgroundColor = UIColor(hex: "A5A5A5FF")
+            sender.backgroundColor = UIColor(rgb: 0x333333)
         }
     }
     
     @IBAction func changeGrayOperatorBackground(_ sender: UIButton) {
         UIView.animate(withDuration: 1) {
-            sender.backgroundColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 1)
-            sender.backgroundColor = UIColor(red: 165/255, green: 165/255, blue: 165/255, alpha: 1)
+            sender.backgroundColor = .white
+            sender.backgroundColor = UIColor(hex: "A5A5A5FF")
         }
     }
     
+    var lastButtonPressed: UIButton?
+    
     @IBAction func changeOrangeOperatorBackground(_ sender: UIButton) {
-        sender.setTitleColor(UIColor(red: 241/255, green: 163/255, blue: 60/255, alpha: 1), for: .focused)
-        sender.backgroundColor = sender.isFocused ? .white : UIColor(red: 241/255, green: 163/255, blue: 60/255, alpha: 1)
+        if let button = lastButtonPressed {
+            button.setTitleColor(.white, for: .normal)
+            button.backgroundColor = UIColor(hex: "F1A33CFF")
+        }
+        sender.setTitleColor(UIColor(hex: "F1A33CFF"), for: .normal)
+        sender.backgroundColor = .white
+        lastButtonPressed = sender
     }
     
     @IBAction func numPressed(_ sender: UIButton) {
+        if let button = lastButtonPressed {
+            button.setTitleColor(.white, for: .normal)
+            button.backgroundColor = UIColor(rgb: 0xF1A33C)
+        }
         runningNumber += "\(sender.tag)"
         label.text = runningNumber
-        changeBackground(sender)
+        changeNumbersBackground(sender)
+    }
+    
+    @IBAction func equalPressed(_ sender: UIButton) {
+        if let button = lastButtonPressed {
+            button.setTitleColor(.white, for: .normal)
+            button.backgroundColor = UIColor(rgb: 0xF1A33C)
+        }
+        UIView.animate(withDuration: 1) {
+            sender.backgroundColor = UIColor(hex: "F1A33C08")
+            sender.backgroundColor = UIColor(hex: "F1A33CFF")
+        }
     }
     
     @IBAction func clear(_ sender: UIButton) {
@@ -119,5 +132,36 @@ class ViewController: UIViewController {
             label.text = result
         }
         currentOperation = operation
+    }
+}
+
+extension UIColor {
+    convenience init(rgb: Int) {
+        let components = (
+            R: CGFloat((rgb >> 16) & 0xff) / 255,
+            G: CGFloat((rgb >> 08) & 0xff) / 255,
+            B: CGFloat((rgb >> 00) & 0xff) / 255
+        )
+        self.init(red: components.R, green: components.G, blue: components.B, alpha: 1)
+    }
+    
+    convenience init(hex: String) {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 1
+
+        let scanner = Scanner(string: hex)
+        var hexNumber: UInt64 = 0
+
+        if scanner.scanHexInt64(&hexNumber) {
+            if hex.count == 8 {
+                r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
+                g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
+                b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
+                a = CGFloat(hexNumber & 0x000000ff) / 255
+            }
+        }
+        self.init(red: r, green: g, blue: b, alpha: a)
     }
 }
