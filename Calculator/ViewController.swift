@@ -16,29 +16,49 @@ enum Operation: String {
 }
 
 class ViewController: UIViewController {
-    
     @IBOutlet var label: UILabel!
     
-    var runningNumer = ""
+    var runningNumber = ""
     var leftValue = ""
     var rightValue = ""
     var result = ""
     var currentOperation: Operation = .NoOperation
+    var operationNames = ["+", "-"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         label.text = "0"
     }
     
-    @IBAction func numPressed(_ sender: UIButton) {
-        if runningNumer.count < 9 {
-            runningNumer += "\(sender.tag)"
-            label.text = runningNumer
+    func changeBackground(_ sender: UIButton) {
+        if sender.titleLabel?.text == "\(sender.tag)" {
+            UIView.animate(withDuration: 1) {
+                sender.backgroundColor = UIColor(red: 165/255, green: 165/255, blue: 165/255, alpha: 1)
+                sender.backgroundColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 1)
+            }
         }
     }
     
+    @IBAction func changeGrayOperatorBackground(_ sender: UIButton) {
+        UIView.animate(withDuration: 1) {
+            sender.backgroundColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 1)
+            sender.backgroundColor = UIColor(red: 165/255, green: 165/255, blue: 165/255, alpha: 1)
+        }
+    }
+    
+    @IBAction func changeOrangeOperatorBackground(_ sender: UIButton) {
+        sender.setTitleColor(UIColor(red: 241/255, green: 163/255, blue: 60/255, alpha: 1), for: .focused)
+        sender.backgroundColor = sender.isFocused ? .white : UIColor(red: 241/255, green: 163/255, blue: 60/255, alpha: 1)
+    }
+    
+    @IBAction func numPressed(_ sender: UIButton) {
+        runningNumber += "\(sender.tag)"
+        label.text = runningNumber
+        changeBackground(sender)
+    }
+    
     @IBAction func clear(_ sender: UIButton) {
-        runningNumer = ""
+        runningNumber = ""
         leftValue = ""
         rightValue = ""
         result = ""
@@ -47,10 +67,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func separator(_ sender: UIButton) {
-        if runningNumer.count < 8 {
-            runningNumer += "."
-            label.text = runningNumer
-        }
+        runningNumber += "."
+        label.text = runningNumber
     }
     
     @IBAction func equals(_ sender: UIButton) {
@@ -74,40 +92,32 @@ class ViewController: UIViewController {
     }
     
     func operation(operation: Operation) {
-        if currentOperation != .NoOperation {
-            if runningNumer != "" {
-                rightValue = runningNumer
-                runningNumer = ""
-                
-                switch currentOperation {
-                case .Add:
-                    result = "\(Double(leftValue)! + Double(rightValue)!)"
-                case .Subtract:
-                    result = "\(Double(leftValue)! - Double(rightValue)!)"
-                case .Multiply:
-                    result = "\(Double(leftValue)! * Double(rightValue)!)"
-                case .Divide:
-                    result = "\(Double(leftValue)! / Double(rightValue)!)"
-                default:
-                    result = ""
-                }
-//                if currentOperation == .Add {
-//                    result = "\(Double(leftValue)! + Double(rightValue)!)"
-//                } else if currentOperation == .Subtract {
-//                    result = "\(Double(leftValue)! - Double(rightValue)!)"
-//                } else if currentOperation == .Multiply {
-//                    result = "\(Double(leftValue)! * Double(rightValue)!)"
-//                } else if currentOperation == .Divide {
-//                    result = "\(Double(leftValue)! / Double(rightValue)!)"
-//                }
-                leftValue = result
-                label.text = result
-            }
+        if currentOperation == .NoOperation {
+            leftValue = runningNumber
+            runningNumber = ""
             currentOperation = operation
-        } else {
-            leftValue = runningNumer
-            runningNumer = ""
-            currentOperation = operation
+            return
         }
+        
+        if runningNumber != "" {
+            rightValue = runningNumber
+            runningNumber = ""
+            
+            switch currentOperation {
+            case .Add:
+                result = "\(Double(leftValue)! + Double(rightValue)!)"
+            case .Subtract:
+                result = "\(Double(leftValue)! - Double(rightValue)!)"
+            case .Multiply:
+                result = "\(Double(leftValue)! * Double(rightValue)!)"
+            case .Divide:
+                result = "\(Double(leftValue)! / Double(rightValue)!)"
+            default:
+                result = ""
+            }
+            leftValue = result
+            label.text = result
+        }
+        currentOperation = operation
     }
 }
