@@ -16,7 +16,10 @@ class ViewController: UIViewController {
     var rightValue = ""
     var result = ""
     var currentOperation: Operation = .NoOperation
-    var operationNames = ["+", "-"]
+    
+    var grayOperatorInitialBackground = "A5A5A5FF"
+    var orangeOperatorInitialBackground = "F1A33CFF"
+    var equalButtonClicked = "F1A33C08"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +28,7 @@ class ViewController: UIViewController {
     
     func changeNumbersBackground(_ sender: UIButton) {
         UIView.animate(withDuration: 1) {
-            sender.backgroundColor = UIColor(hex: "A5A5A5FF")
+            sender.backgroundColor = UIColor(hex: self.grayOperatorInitialBackground)
             sender.backgroundColor = UIColor(rgb: 0x333333)
         }
     }
@@ -33,7 +36,7 @@ class ViewController: UIViewController {
     @IBAction func changeGrayOperatorBackground(_ sender: UIButton) {
         UIView.animate(withDuration: 1) {
             sender.backgroundColor = .white
-            sender.backgroundColor = UIColor(hex: "A5A5A5FF")
+            sender.backgroundColor = UIColor(hex: self.grayOperatorInitialBackground)
         }
     }
     
@@ -42,9 +45,9 @@ class ViewController: UIViewController {
     @IBAction func changeOrangeOperatorBackground(_ sender: UIButton) {
         if let button = lastButtonPressed {
             button.setTitleColor(.white, for: .normal)
-            button.backgroundColor = UIColor(hex: "F1A33CFF")
+            button.backgroundColor = UIColor(hex: orangeOperatorInitialBackground)
         }
-        sender.setTitleColor(UIColor(hex: "F1A33CFF"), for: .normal)
+        sender.setTitleColor(UIColor(hex: orangeOperatorInitialBackground), for: .normal)
         sender.backgroundColor = .white
         lastButtonPressed = sender
     }
@@ -52,7 +55,7 @@ class ViewController: UIViewController {
     @IBAction func numPressed(_ sender: UIButton) {
         if let button = lastButtonPressed {
             button.setTitleColor(.white, for: .normal)
-            button.backgroundColor = UIColor(rgb: 0xF1A33C)
+            button.backgroundColor = UIColor(hex: orangeOperatorInitialBackground)
         }
         runningNumber += "\(sender.tag)"
         label.text = runningNumber
@@ -62,11 +65,11 @@ class ViewController: UIViewController {
     @IBAction func equalPressed(_ sender: UIButton) {
         if let button = lastButtonPressed {
             button.setTitleColor(.white, for: .normal)
-            button.backgroundColor = UIColor(rgb: 0xF1A33C)
+            button.backgroundColor = UIColor(hex: orangeOperatorInitialBackground)
         }
         UIView.animate(withDuration: 1) {
-            sender.backgroundColor = UIColor(hex: "F1A33C08")
-            sender.backgroundColor = UIColor(hex: "F1A33CFF")
+            sender.backgroundColor = UIColor(hex: self.equalButtonClicked)
+            sender.backgroundColor = UIColor(hex: self.orangeOperatorInitialBackground)
         }
     }
     
